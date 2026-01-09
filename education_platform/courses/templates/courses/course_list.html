@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Каталог курсов{% endblock %}
+
+{% block content %}
+<h2>Каталог курсов</h2>
+
+{% if courses %}
+    <ul>
+    {% for course in courses %}
+        <li>
+            <h3>{{ course.title }}</h3>
+            <p>{{ course.description|truncatewords:30 }}</p>
+            <p>Преподаватели: {{ course.get_instructors_names }}</p>
+            <p>Стоимость: {{ course.price }} руб.</p>
+            <a href="{% url 'courses:course_detail' course.id %}">Подробнее и запись</a>
+            <hr>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Нет доступных курсов</p>
+{% endif %}
+
+{% if news %}
+    <h3>Новости:</h3>
+    <ul>
+    {% for item in news %}
+        <li>
+            {% if item.title %}
+                <strong>{{ item.title }}</strong><br>
+            {% endif %}
+            {% if item.description %}
+                {{ item.description|truncatewords:20 }}<br>
+            {% endif %}
+            <a href="{{ item.url }}" target="_blank">Читать далее</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

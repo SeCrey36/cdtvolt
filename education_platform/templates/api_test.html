@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест JWT API</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+        .token-display { word-break: break-all; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>📡 Тестирование JWT API</h1>
+    
+    <!-- Регистрация -->
+    <div class="section">
+        <h2>1. Регистрация</h2>
+        <div>
+            <input type="text" id="regUsername" placeholder="Имя пользователя">
+            <input type="email" id="regEmail" placeholder="Email">
+            <input type="text" id="regFirstName" placeholder="Имя">
+            <input type="text" id="regLastName" placeholder="Фамилия">
+            <input type="password" id="regPassword" placeholder="Пароль">
+            <input type="password" id="regPassword2" placeholder="Повторите пароль">
+            <input type="text" id="regPhone" placeholder="Телефон (опционально)">
+            <button onclick="register()">Зарегистрироваться</button>
+        </div>
+        <div id="registerResult"></div>
+    </div>
+    
+    <!-- Вход -->
+    <div class="section">
+        <h2>2. Вход</h2>
+        <div>
+            <input type="text" id="loginUsername" placeholder="Имя пользователя">
+            <input type="password" id="loginPassword" placeholder="Пароль">
+            <button onclick="login()">Войти</button>
+        </div>
+        <div id="loginResult"></div>
+    </div>
+    
+    <!-- Подтверждение email -->
+    <div class="section">
+        <h2>3. Подтверждение email</h2>
+        <div>
+            <input type="text" id="confirmToken" placeholder="Токен из email">
+            <button onclick="confirmEmail()">Подтвердить email</button>
+        </div>
+        <div id="confirmResult"></div>
+    </div>
+    
+    <!-- Профиль -->
+    <div class="section">
+        <h2>4. Получить профиль (требуется авторизация)</h2>
+        <button onclick="getProfile()">Получить профиль</button>
+        <button onclick="clearTokens()" style="background: #dc3545;">Выйти</button>
+        <div id="profileResult"></div>
+    </div>
+    
+    <!-- Создание записи -->
+    <div class="section">
+        <h2>5. Создать запись на курс (требуется авторизация)</h2>
+        <div>
+            <input type="text" id="enrollmentName" placeholder="Ваше имя">
+            <input type="text" id="enrollmentPhone" placeholder="Телефон">
+            <input type="email" id="enrollmentEmail" placeholder="Email">
+            <textarea id="enrollmentComment" placeholder="Комментарий"></textarea>
+            <input type="checkbox" id="dataConsent"> Согласен на обработку данных
+            <input type="text" id="enrollmentSlots" placeholder="ID слотов через запятую (например: 1,2,3)">
+            <button onclick="createEnrollment()">Создать запись</button>
+        </div>
+        <div id="enrollmentResult"></div>
+    </div>
+    
+    <!-- Список курсов -->
+    <div class="section">
+        <h2>6. Получить список курсов (публичный)</h2>
+        <button onclick="getCourses()">Получить курсы</button>
+        <div id="coursesResult"></div>
+    </div>
+    
+    <!-- Текущие токены -->
+    <div class="section">
+        <h2>Текущие токены</h2>
+        <div class="token-display">
+            <strong>Access Token:</strong> <span id="accessTokenDisplay">Не установлен</span><br>
+            <strong>Refresh Token:</strong> <span id="refreshTokenDisplay">Не установлен</span>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000/api';
+        let accessToken = localStorage.getItem('access_token');
+        let refreshToken = localStorage.getItem('refresh_token');
+        
+        // Обновляем отображение токенов
+        function updateTokenDisplay() {
+            document.getElementById('accessTokenDisplay').textContent = 
+                accessToken ? accessToken.substring(0, 50) + '...' : 'Не установлен';
+            document.getElementById('refreshTokenDisplay').textContent = 
+                refreshToken ? refreshToken.substring(0, 50) + '...' : 'Не установлен';
+        }
+        
+        updateTokenDisplay();
+        
+        // Сохраняем токены
+        function saveTokens(data) {
+            if (data.access) {
+                accessToken = data.access;
+                localStorage.setItem('access_token', data.access);
+            }
+            if (data.refresh) {
+                refreshToken = data.refresh;
+                localStorage.setItem('refresh_token', data.refresh);
+            }
+            updateTokenDisplay();
+        }
+        
+        // Очистка токенов
+        function clearTokens() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            accessToken = null;
+            refreshToken = null;
+            updateTokenDisplay();
+            alert('Токены очищены');
+        }
+        
+        // Функция для запросов с авторизацией
+        async function makeAuthRequest(url, options = {}) {
+            if (!options.headers) options.headers = {};
+            if (accessToken) {
+                options.headers['Authorization'] = `Bearer ${accessToken}`;
+            }
+            options.headers['Content-Type'] = 'application/json';
+            
+            try {
+                const response = await fetch(url, options);
+                
+                // Если токен истек, пытаемся обновить
+                if (response.status === 401 && refreshToken) {
+                    const refreshed = await refreshAccessToken();
+                    if (refreshed) {
+                        // Повторяем запрос с новым токеном
+                        options.headers['Authorization'] = `Bearer ${accessToken}`;
+                        return await fetch(url, options);
+                    }
+                }
+                
+                return response;
+            } catch (error) {
+                console.error('Ошибка сети:', error);
+                throw error;
+            }
+        }
+        
+        // Обновление access токена
+        async function refreshAccessToken() {
+            if (!refreshToken) return false;
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/refresh/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ refresh: refreshToken })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    saveTokens(data);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Ошибка обновления токена:', error);
+            }
+            
+            // Если не удалось обновить, очищаем токены
+            clearTokens();
+            return false;
+        }
+        
+        // 1. Регистрация
+        async function register() {
+            const data = {
+                username: document.getElementById('regUsername').value,
+                email: document.getElementById('regEmail').value,
+                first_name: document.getElementById('regFirstName').value,
+                last_name: document.getElementById('regLastName').value,
+                password: document.getElementById('regPassword').value,
+                password2: document.getElementById('regPassword2').value,
+                phone: document.getElementById('regPhone').value || ''
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/register/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                document.getElementById('registerResult').innerHTML = 
+                    `<pre class="${response.ok ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('registerResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+        
+        // 2. Вход
+        async function login() {
+            const data = {
+                username: document.getElementById('loginUsername').value,
+                password: document.getElementById('loginPassword').value
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    saveTokens(result);
+                    document.getElementById('loginResult').innerHTML = 
+                        `<pre class="success">✅ Успешный вход! Токены сохранены.</pre>`;
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        `<pre class="error">${JSON.stringify(result, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+        
+        // 3. Подтверждение email
+        async function confirmEmail() {
+            const token = document.getElementById('confirmToken').value;
+            const data = { token };
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/confirm-email/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                document.getElementById('confirmResult').innerHTML = 
+                    `<pre class="${response.ok ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('confirmResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+        
+        // 4. Получить профиль
+        async function getProfile() {
+            if (!accessToken) {
+                document.getElementById('profileResult').innerHTML = 
+                    `<pre class="error">Сначала войдите в систему</pre>`;
+                return;
+            }
+            
+            try {
+                const response = await makeAuthRequest(`${API_BASE}/profile/`);
+                const result = await response.json();
+                document.getElementById('profileResult').innerHTML = 
+                    `<pre class="${response.ok ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('profileResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+        
+        // 5. Создать запись на курс
+        async function createEnrollment() {
+            if (!accessToken) {
+                document.getElementById('enrollmentResult').innerHTML = 
+                    `<pre class="error">Сначала войдите в систему</pre>`;
+                return;
+            }
+            
+            const slotIds = document.getElementById('enrollmentSlots').value
+                .split(',')
+                .map(id => parseInt(id.trim()))
+                .filter(id => !isNaN(id));
+            
+            const data = {
+                student_name: document.getElementById('enrollmentName').value,
+                student_phone: document.getElementById('enrollmentPhone').value,
+                student_email: document.getElementById('enrollmentEmail').value,
+                student_comment: document.getElementById('enrollmentComment').value,
+                data_consent: document.getElementById('dataConsent').checked,
+                time_slot_ids: slotIds
+            };
+            
+            try {
+                const response = await makeAuthRequest(`${API_BASE}/enrollments/create/`, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                document.getElementById('enrollmentResult').innerHTML = 
+                    `<pre class="${response.ok ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('enrollmentResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+        
+        // 6. Получить список курсов
+        async function getCourses() {
+            try {
+                const response = await fetch(`${API_BASE}/courses/`);
+                const result = await response.json();
+                document.getElementById('coursesResult').innerHTML = 
+                    `<pre class="success">${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('coursesResult').innerHTML = 
+                    `<pre class="error">Ошибка: ${error}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>

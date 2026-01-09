@@ -1,0 +1,65 @@
+/* CDT Volt Admin Styles */
+
+/* Header */
+#header {
+    background: #1a365d;
+    color: white;
+}
+
+#branding h1 {
+    color: white;
+    font-weight: bold;
+}
+
+#branding h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+#branding h1 a:hover {
+    color: #f6e05e;
+}
+
+/* Add lightning icon */
+#branding h1:before {
+    content: "⚡ ";
+    color: #f6e05e;
+}
+
+/* Module headers */
+.module h2, .module caption, .inline-group h2 {
+    background: #2d3748;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: #4a5568;
+    color: white;
+}
+
+div.breadcrumbs a {
+    color: #e2e8f0;
+}
+
+div.breadcrumbs a:hover {
+    color: #f6e05e;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #2b6cb0;
+    color: white;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #2c5282;
+}
+
+/* Links */
+a:link, a:visited {
+    color: #2b6cb0;
+}
+
+a:hover {
+    color: #1a365d;
+}

@@ -1,0 +1,118 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}Вход - Образовательная платформа{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> Вход в систему</h4>
+        </div>
+        <div class="card-body">
+            <form id="login-form">
+                <div class="mb-3">
+                    <label class="form-label">Имя пользователя или Email *</label>
+                    <input type="text" class="form-control" name="username" required 
+                           placeholder="Введите ваш логин">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Пароль *</label>
+                    <input type="password" class="form-control" name="password" required
+                           placeholder="Введите пароль">
+                </div>
+                
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Войти
+                    </button>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-muted mb-0">Нет аккаунта?</p>
+                    <a href="/register/" class="btn btn-outline-secondary btn-sm">
+                        Зарегистрироваться
+                    </a>
+                </div>
+            </form>
+            
+            <div id="login-result" class="mt-3"></div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Страница входа загружена');
+    });
+    
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (window.loginSubmitting) {
+            console.warn('Вход уже отправляется, пропуск повтора');
+            return;
+        }
+        window.loginSubmitting = true;
+        console.log('Обработка формы входа...');
+
+        const formData = new FormData(this);
+        const username = formData.get('username');
+        const password = formData.get('password');
+
+        const button = this.querySelector('button[type="submit"]');
+        const resultDiv = document.getElementById('login-result');
+
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Вход...';
+        resultDiv.innerHTML = '';
+
+        try {
+            console.log('Отправляем запрос входа для пользователя:', username);
+            const result = await apiLogin(username, password);
+            
+            console.log('Вход успешен! Редирект через 1 секунду...');
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle"></i> Успешный вход! Перенаправляем...
+                </div>
+            `;
+            
+            // Редирект на главную через 1 секунду
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+            
+        } catch (error) {
+            console.error('Ошибка входа:', error);
+            
+            let errorMessage = 'Неверное имя пользователя или пароль';
+            try {
+                const errorData = JSON.parse(error.message);
+                errorMessage = errorData.detail || Object.values(errorData).join(', ');
+            } catch {}
+            
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i> ${errorMessage}
+                </div>
+            `;
+            
+            button.disabled = false;
+            button.textContent = 'Войти';
+        } finally {
+            window.loginSubmitting = false;
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}
