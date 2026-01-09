@@ -1,0 +1,175 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Backup files
+*.bak
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+*.py[co]
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter
+.ipynb_checkpoints
+
+# Database migrations (optional - only if you want to ignore migrations)
+# !/name_of_your_app/migrations/
+# /name_of_your_app/migrations/*
+# !/name_of_your_app/migrations/__init__.py
+
+# Static files (if collected)
+/static/
+/media/
+
+# Coverage
+.coverage
+.coverage.*
+
+# Pycharm
+.idea/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+
+# Temp files
+tmp/
+temp/
+
+# Certificates
+*.pem
+*.key
+*.crt
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Node (if using frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+.pytest_cache/
+.tox/
+.coverage
+coverage.xml
+
+# Docs
+docs/_build/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# SQLite (dev only - if using SQLite)
+*.sqlite3
+
+# Secrets
+secrets.py
+secret_key.txt
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Flower (Celery monitoring)
+flower.pid
+
+# Redis
+dump.rdb
+
+# PostgreSQL
+*.pid
+*.socket
+postgresql/
+
+# MySQL
+*.ibd
+*.frm
+*.myd
+*.myi
+
+# Media and static (if using collectstatic locally)
+/media/*
+!/media/.gitkeep
+/static/*
+!/static/.gitkeep
+
+# Development tools
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+
+# Project specific
+uploads/
+temp_uploads/
