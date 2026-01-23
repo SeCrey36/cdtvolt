@@ -1,0 +1,21 @@
+title,day_of_week,time_slot,instructor
+Course 1,0,16-18,Kevin Rodriguez Jr.
+Course 1,1,14-16,Kevin Rodriguez Jr.
+Course 1,2,12-14,Kevin Rodriguez Jr.
+Course 1,3,18-20,Kevin Rodriguez Jr.
+Course 1,4,14-16,Kevin Rodriguez Jr.
+Course 2,0,12-14,Suzanne Rowland
+Course 2,1,18-20,Suzanne Rowland
+Course 2,2,14-16,Suzanne Rowland
+Course 2,3,12-14,Suzanne Rowland
+Course 2,4,16-18,Suzanne Rowland
+Course 3,0,16-18,Linda Diaz
+Course 3,1,14-16,Linda Diaz
+Course 3,2,12-14,Linda Diaz
+Course 3,3,8-10,Linda Diaz
+Course 3,4,20-22,Linda Diaz
+Course 4,0,12-14,Robert Lee
+Course 4,1,16-18,Robert Lee
+Course 4,2,20-22,Robert Lee
+Course 4,3,14-16,Robert Lee
+Course 4,4,10-12,Robert Lee

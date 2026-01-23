@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Course 1",
+    "day_of_week": 0,
+    "time_slot": "16-18",
+    "instructor": "Kevin Rodriguez Jr."
+  },
+  {
+    "title": "Course 1",
+    "day_of_week": 1,
+    "time_slot": "14-16",
+    "instructor": "Kevin Rodriguez Jr."
+  },
+  {
+    "title": "Course 1",
+    "day_of_week": 2,
+    "time_slot": "12-14",
+    "instructor": "Kevin Rodriguez Jr."
+  },
+  {
+    "title": "Course 1",
+    "day_of_week": 3,
+    "time_slot": "18-20",
+    "instructor": "Kevin Rodriguez Jr."
+  },
+  {
+    "title": "Course 1",
+    "day_of_week": 4,
+    "time_slot": "14-16",
+    "instructor": "Kevin Rodriguez Jr."
+  },
+  {
+    "title": "Course 2",
+    "day_of_week": 0,
+    "time_slot": "12-14",
+    "instructor": "Suzanne Rowland"
+  },
+  {
+    "title": "Course 2",
+    "day_of_week": 1,
+    "time_slot": "18-20",
+    "instructor": "Suzanne Rowland"
+  },
+  {
+    "title": "Course 2",
+    "day_of_week": 2,
+    "time_slot": "14-16",
+    "instructor": "Suzanne Rowland"
+  },
+  {
+    "title": "Course 2",
+    "day_of_week": 3,
+    "time_slot": "12-14",
+    "instructor": "Suzanne Rowland"
+  },
+  {
+    "title": "Course 2",
+    "day_of_week": 4,
+    "time_slot": "16-18",
+    "instructor": "Suzanne Rowland"
+  },
+  {
+    "title": "Course 3",
+    "day_of_week": 0,
+    "time_slot": "16-18",
+    "instructor": "Linda Diaz"
+  },
+  {
+    "title": "Course 3",
+    "day_of_week": 1,
+    "time_slot": "14-16",
+    "instructor": "Linda Diaz"
+  },
+  {
+    "title": "Course 3",
+    "day_of_week": 2,
+    "time_slot": "12-14",
+    "instructor": "Linda Diaz"
+  },
+  {
+    "title": "Course 3",
+    "day_of_week": 3,
+    "time_slot": "8-10",
+    "instructor": "Linda Diaz"
+  },
+  {
+    "title": "Course 3",
+    "day_of_week": 4,
+    "time_slot": "20-22",
+    "instructor": "Linda Diaz"
+  },
+  {
+    "title": "Course 4",
+    "day_of_week": 0,
+    "time_slot": "12-14",
+    "instructor": "Robert Lee"
+  },
+  {
+    "title": "Course 4",
+    "day_of_week": 1,
+    "time_slot": "16-18",
+    "instructor": "Robert Lee"
+  },
+  {
+    "title": "Course 4",
+    "day_of_week": 2,
+    "time_slot": "20-22",
+    "instructor": "Robert Lee"
+  },
+  {
+    "title": "Course 4",
+    "day_of_week": 3,
+    "time_slot": "14-16",
+    "instructor": "Robert Lee"
+  },
+  {
+    "title": "Course 4",
+    "day_of_week": 4,
+    "time_slot": "10-12",
+    "instructor": "Robert Lee"
+  }
+]

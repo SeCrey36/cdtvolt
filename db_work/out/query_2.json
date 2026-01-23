@@ -1,0 +1,52 @@
+[
+  {
+    "course_id": 1,
+    "title": "Course 1",
+    "timeslot_id": 1
+  },
+  {
+    "course_id": 1,
+    "title": "Course 1",
+    "timeslot_id": 2
+  },
+  {
+    "course_id": 1,
+    "title": "Course 1",
+    "timeslot_id": 3
+  },
+  {
+    "course_id": 1,
+    "title": "Course 1",
+    "timeslot_id": 4
+  },
+  {
+    "course_id": 1,
+    "title": "Course 1",
+    "timeslot_id": 5
+  },
+  {
+    "course_id": 2,
+    "title": "Course 2",
+    "timeslot_id": 6
+  },
+  {
+    "course_id": 2,
+    "title": "Course 2",
+    "timeslot_id": 7
+  },
+  {
+    "course_id": 2,
+    "title": "Course 2",
+    "timeslot_id": 8
+  },
+  {
+    "course_id": 2,
+    "title": "Course 2",
+    "timeslot_id": 9
+  },
+  {
+    "course_id": 2,
+    "title": "Course 2",
+    "timeslot_id": 10
+  }
+]

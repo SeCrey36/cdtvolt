@@ -1,0 +1,16 @@
+course_id,title,timeslot_id,room
+1,Course 1,1,Room 5
+1,Course 1,2,Room 6
+1,Course 1,3,Room 7
+2,Course 2,1,Room 5
+2,Course 2,2,Room 6
+2,Course 2,3,Room 7
+3,Course 3,1,Room 5
+3,Course 3,2,Room 6
+3,Course 3,3,Room 7
+4,Course 4,1,Room 5
+4,Course 4,2,Room 6
+4,Course 4,3,Room 7
+5,Course 5,1,Room 5
+5,Course 5,2,Room 6
+5,Course 5,3,Room 7
