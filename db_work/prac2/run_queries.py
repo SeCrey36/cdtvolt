@@ -49,7 +49,7 @@ def run():
             json_path = OUT / f'query_{i}.json'
             json_path.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding='utf-8')
 
-            # also write CSV for convenience
+        
             if cols:
                 csv_path = OUT / f'query_{i}.csv'
                 with csv_path.open('w', newline='', encoding='utf-8') as f:

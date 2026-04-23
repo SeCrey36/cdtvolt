@@ -201,7 +201,19 @@
             return;
         }
 
-        container.innerHTML = enrollments.map(enrollment => `
+        const getStatusMeta = (decisionStatus) => {
+            if (decisionStatus === 'accepted') {
+                return { badge: 'success', text: t('profile.status_accepted') };
+            }
+            if (decisionStatus === 'rejected') {
+                return { badge: 'danger', text: t('profile.status_rejected') };
+            }
+            return { badge: 'warning', text: t('profile.status_pending') };
+        };
+
+        container.innerHTML = enrollments.map(enrollment => {
+            const status = getStatusMeta(enrollment.decision_status);
+            return `
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
@@ -211,8 +223,8 @@
                                 <i class="bi bi-clock"></i> ${enrollment.created_at}
                             </p>
                             <div class="mb-2">
-                                <span class="badge bg-${enrollment.is_approved ? 'success' : 'warning'}">
-                                    ${enrollment.is_approved ? t('profile.status_reviewed') : t('profile.status_pending')}
+                                <span class="badge bg-${status.badge}">
+                                    ${status.text}
                                 </span>
                             </div>
                             <div class="mt-2">
@@ -237,7 +249,8 @@
                     </div>
                 </div>
             </div>
-        `).join('');
+        `;
+        }).join('');
     }
 
     async function saveProfile() {

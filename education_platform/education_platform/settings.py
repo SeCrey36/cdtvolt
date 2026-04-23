@@ -154,6 +154,7 @@ EMAIL_USE_TLS = False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'user@example.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+CONTRACT_TEMPLATE_PATH = os.getenv('CONTRACT_TEMPLATE_PATH', '')
 
 
 # Настройки медиа файлов (для фото преподавателей и курсов)

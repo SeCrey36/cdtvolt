@@ -3,90 +3,90 @@
     "course_id": 1,
     "title": "Course 1",
     "timeslot_id": 1,
-    "room": "Room 5"
+    "room": "Room 2"
   },
   {
     "course_id": 1,
     "title": "Course 1",
     "timeslot_id": 2,
-    "room": "Room 6"
+    "room": "Room 3"
   },
   {
     "course_id": 1,
     "title": "Course 1",
     "timeslot_id": 3,
-    "room": "Room 7"
+    "room": "Room 2"
   },
   {
     "course_id": 2,
     "title": "Course 2",
     "timeslot_id": 1,
-    "room": "Room 5"
+    "room": "Room 2"
   },
   {
     "course_id": 2,
     "title": "Course 2",
     "timeslot_id": 2,
-    "room": "Room 6"
+    "room": "Room 3"
   },
   {
     "course_id": 2,
     "title": "Course 2",
     "timeslot_id": 3,
-    "room": "Room 7"
+    "room": "Room 2"
   },
   {
     "course_id": 3,
     "title": "Course 3",
     "timeslot_id": 1,
-    "room": "Room 5"
+    "room": "Room 2"
   },
   {
     "course_id": 3,
     "title": "Course 3",
     "timeslot_id": 2,
-    "room": "Room 6"
+    "room": "Room 3"
   },
   {
     "course_id": 3,
     "title": "Course 3",
     "timeslot_id": 3,
-    "room": "Room 7"
+    "room": "Room 2"
   },
   {
     "course_id": 4,
     "title": "Course 4",
     "timeslot_id": 1,
-    "room": "Room 5"
+    "room": "Room 2"
   },
   {
     "course_id": 4,
     "title": "Course 4",
     "timeslot_id": 2,
-    "room": "Room 6"
+    "room": "Room 3"
   },
   {
     "course_id": 4,
     "title": "Course 4",
     "timeslot_id": 3,
-    "room": "Room 7"
+    "room": "Room 2"
   },
   {
     "course_id": 5,
     "title": "Course 5",
     "timeslot_id": 1,
-    "room": "Room 5"
+    "room": "Room 2"
   },
   {
     "course_id": 5,
     "title": "Course 5",
     "timeslot_id": 2,
-    "room": "Room 6"
+    "room": "Room 3"
   },
   {
     "course_id": 5,
     "title": "Course 5",
     "timeslot_id": 3,
-    "room": "Room 7"
+    "room": "Room 2"
   }
 ]

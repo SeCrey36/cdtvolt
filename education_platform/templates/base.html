@@ -13,10 +13,17 @@
             --secondary-color: #3a0ca3;
             --success-color: #4cc9f0;
         }
+        html, body {
+            height: 100%;
+        }
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
             padding-top: 70px;
+            margin: 0;
         }
         .navbar-brand {
             font-weight: 700;
@@ -62,6 +69,14 @@
             right: 20px;
             z-index: 1000;
             min-width: 300px;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            margin-top: auto;
         }
     </style>
     {% block extra_css %}{% endblock %}

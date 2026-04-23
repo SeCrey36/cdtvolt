@@ -1,0 +1,162 @@
+[
+  {
+    "step": "baseline",
+    "num_indexes_applied": 0,
+    "plan": [
+      [
+        7,
+        0,
+        0,
+        "SEARCH e USING INDEX idx_enrollments_data_consent (data_consent=?)"
+      ],
+      [
+        18,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        22,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        43,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.4288999589625746,
+    "rows_count": 300415
+  },
+  {
+    "step": "index_courses_title",
+    "num_indexes_applied": 1,
+    "plan": [
+      [
+        7,
+        0,
+        0,
+        "SEARCH e USING INDEX idx_enrollments_data_consent (data_consent=?)"
+      ],
+      [
+        18,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        22,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        43,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.277117749908939,
+    "rows_count": 300415
+  },
+  {
+    "step": "add_where_indexes",
+    "num_indexes_applied": 3,
+    "plan": [
+      [
+        7,
+        0,
+        0,
+        "SEARCH e USING INDEX idx_enrollments_data_consent (data_consent=?)"
+      ],
+      [
+        18,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        22,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        43,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.2980514590162784,
+    "rows_count": 300415
+  },
+  {
+    "step": "composite_indexes",
+    "num_indexes_applied": 2,
+    "plan": [
+      [
+        6,
+        0,
+        0,
+        "SEARCH e USING COVERING INDEX idx_enr_consent_created (data_consent=?)"
+      ],
+      [
+        16,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        20,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        41,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.5834436670411378,
+    "rows_count": 300415
+  },
+  {
+    "step": "add_join_indexes",
+    "num_indexes_applied": 3,
+    "plan": [
+      [
+        6,
+        0,
+        0,
+        "SEARCH e USING COVERING INDEX idx_enr_consent_created (data_consent=?)"
+      ],
+      [
+        16,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        20,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        41,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.6484706250485033,
+    "rows_count": 300415
+  }
+]

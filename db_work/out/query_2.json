@@ -25,28 +25,28 @@
     "timeslot_id": 5
   },
   {
-    "course_id": 2,
-    "title": "Course 2",
-    "timeslot_id": 6
+    "course_id": 10,
+    "title": "Course 10",
+    "timeslot_id": 46
   },
   {
-    "course_id": 2,
-    "title": "Course 2",
-    "timeslot_id": 7
+    "course_id": 10,
+    "title": "Course 10",
+    "timeslot_id": 47
   },
   {
-    "course_id": 2,
-    "title": "Course 2",
-    "timeslot_id": 8
+    "course_id": 10,
+    "title": "Course 10",
+    "timeslot_id": 48
   },
   {
-    "course_id": 2,
-    "title": "Course 2",
-    "timeslot_id": 9
+    "course_id": 10,
+    "title": "Course 10",
+    "timeslot_id": 49
   },
   {
-    "course_id": 2,
-    "title": "Course 2",
-    "timeslot_id": 10
+    "course_id": 10,
+    "title": "Course 10",
+    "timeslot_id": 50
   }
 ]

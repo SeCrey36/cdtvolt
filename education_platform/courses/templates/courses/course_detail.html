@@ -228,6 +228,38 @@
                             <textarea class="form-control" rows="2" id="student-comment"
                                       placeholder="Ваши пожелания или вопросы"></textarea>
                         </div>
+
+                        <hr>
+                        <h6 class="mb-3">Данные заказчика для договора (вписать данные родителя при записи несовершеннолетнего)</h6>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Фамилия *</label>
+                                <input type="text" class="form-control" id="student-surname" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Имя *</label>
+                                <input type="text" class="form-control" id="student-first-name" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Отчество</label>
+                                <input type="text" class="form-control" id="student-patronymic">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Серия паспорта *</label>
+                                <input type="text" class="form-control" id="student-passport-series" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Номер паспорта *</label>
+                                <input type="text" class="form-control" id="student-passport-number" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Кем выдан паспорт *</label>
+                                <input type="text" class="form-control" id="student-passport-issued-by" required>
+                            </div>
+                        </div>
+
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" required id="data-consent">
                             <label class="form-check-label" for="data-consent">
@@ -258,6 +290,7 @@
     // Проверяем авторизацию при загрузке страницы
     document.addEventListener('DOMContentLoaded', async function() {
         console.log('Страница курса загружена, проверяем авторизацию...');
+        initInputMasks();
         
         // Ждем немного, чтобы checkAuthOnLoad() успел выполниться
         setTimeout(() => {
@@ -288,6 +321,52 @@
             initTimeSlotSelection();
         }
     }
+
+    function initInputMasks() {
+        const phoneInput = document.getElementById('student-phone');
+        const passportSeriesInput = document.getElementById('student-passport-series');
+        const passportNumberInput = document.getElementById('student-passport-number');
+
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function() {
+                let v = this.value.replace(/\D/g, '');
+                if (v.startsWith('8')) v = '7' + v.slice(1);
+                if (!v.startsWith('7')) v = '7' + v;
+                v = v.slice(0, 11);
+
+                let formatted = '+7';
+                if (v.length > 1) formatted += ' (' + v.slice(1, 4);
+                if (v.length >= 4) formatted += ') ' + v.slice(4, 7);
+                if (v.length >= 7) formatted += '-' + v.slice(7, 9);
+                if (v.length >= 9) formatted += '-' + v.slice(9, 11);
+                this.value = formatted;
+            });
+        }
+
+        if (passportSeriesInput) {
+            passportSeriesInput.setAttribute('maxlength', '5');
+            passportSeriesInput.setAttribute('placeholder', '1234');
+            passportSeriesInput.addEventListener('input', function() {
+                let v = this.value.replace(/\D/g, '').slice(0, 4);
+                if (v.length > 2) {
+                    v = v.slice(0, 2) + ' ' + v.slice(2);
+                }
+                this.value = v;
+            });
+        }
+
+        if (passportNumberInput) {
+            passportNumberInput.setAttribute('maxlength', '7');
+            passportNumberInput.setAttribute('placeholder', '123456');
+            passportNumberInput.addEventListener('input', function() {
+                let v = this.value.replace(/\D/g, '').slice(0, 6);
+                if (v.length > 3) {
+                    v = v.slice(0, 3) + ' ' + v.slice(3);
+                }
+                this.value = v;
+            });
+        }
+    }
     
     // Заполнение формы данными пользователя
     function fillUserData() {
@@ -296,9 +375,19 @@
         const nameInput = document.getElementById('student-name');
         const phoneInput = document.getElementById('student-phone');
         const emailInput = document.getElementById('student-email');
+        const surnameInput = document.getElementById('student-surname');
+        const firstNameInput = document.getElementById('student-first-name');
         
         if (nameInput && currentUser.first_name && currentUser.last_name) {
             nameInput.value = `${currentUser.first_name} ${currentUser.last_name}`.trim();
+        }
+
+        if (surnameInput && currentUser.last_name) {
+            surnameInput.value = currentUser.last_name;
+        }
+
+        if (firstNameInput && currentUser.first_name) {
+            firstNameInput.value = currentUser.first_name;
         }
         
         if (phoneInput && currentUser.phone) {
@@ -425,6 +514,12 @@
             student_phone: document.getElementById('student-phone').value,
             student_email: document.getElementById('student-email').value,
             student_comment: document.getElementById('student-comment').value || '',
+            student_surname: document.getElementById('student-surname').value,
+            student_first_name: document.getElementById('student-first-name').value,
+            student_patronymic: document.getElementById('student-patronymic').value || '',
+            student_passport_series: document.getElementById('student-passport-series').value.replace(/\s/g, ''),
+            student_passport_number: document.getElementById('student-passport-number').value.replace(/\s/g, ''),
+            student_passport_issued_by: document.getElementById('student-passport-issued-by').value,
             data_consent: document.getElementById('data-consent').checked,
             time_slot_ids: Array.from(window.courseDetail.selectedSlots).map(id => parseInt(id))
         };

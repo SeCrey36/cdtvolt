@@ -253,7 +253,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
         fields = ['id', 'course_title', 'time_slots_info', 'student_name',
-                 'student_email', 'created_at', 'is_approved', 'feedback']
+                 'student_email', 'created_at', 'decision_status', 'feedback']
     
     def get_time_slots_info(self, obj):
         slots = obj.time_slots.all()
@@ -276,7 +276,17 @@ class CreateEnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
         fields = ['student_name', 'student_phone', 'student_email',
-                 'student_comment', 'data_consent', 'time_slot_ids']
+                 'student_comment', 'data_consent', 'time_slot_ids',
+                 'student_surname', 'student_first_name', 'student_patronymic',
+                 'student_passport_series', 'student_passport_number', 'student_passport_issued_by']
+        extra_kwargs = {
+            'student_surname': {'required': True, 'allow_blank': False},
+            'student_first_name': {'required': True, 'allow_blank': False},
+            'student_patronymic': {'required': False, 'allow_blank': True},
+            'student_passport_series': {'required': True, 'allow_blank': False},
+            'student_passport_number': {'required': True, 'allow_blank': False},
+            'student_passport_issued_by': {'required': True, 'allow_blank': False},
+        }
     
     def validate(self, attrs):
         # Проверяем, что пользователь подтвердил email
@@ -331,6 +341,21 @@ class CreateEnrollmentSerializer(serializers.ModelSerializer):
             if user.profile.phone:
                 validated_data.setdefault('student_phone', user.profile.phone)
             validated_data['user'] = user
+
+            # Если заказчик не заполнил полное имя отдельными полями, пробуем автозаполнить
+            validated_data.setdefault('student_first_name', user.first_name)
+            validated_data.setdefault('student_surname', user.last_name)
+
+        # Синхронизируем отображаемое поле student_name с полями ФИО для договора
+        fio = ' '.join(
+            part for part in [
+                validated_data.get('student_surname', ''),
+                validated_data.get('student_first_name', ''),
+                validated_data.get('student_patronymic', ''),
+            ] if part
+        ).strip()
+        if fio:
+            validated_data['student_name'] = fio
         
         validated_data.pop('course', None)
         enrollment = Enrollment.objects.create(**validated_data)

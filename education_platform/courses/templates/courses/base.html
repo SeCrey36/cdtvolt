@@ -13,10 +13,17 @@
             --secondary-color: #3a0ca3;
             --success-color: #4cc9f0;
         }
+        html, body {
+            height: 100%;
+        }
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
             padding-top: 70px;
+            margin: 0;
         }
         .navbar-brand {
             font-weight: 700;
@@ -62,7 +69,6 @@
             right: 20px;
             z-index: 1000;
             min-width: 300px;
-        
         }
         /* Принудительное скрытие/показ навигации по классу на body */
         body.authed .guest-only { display: none !important; }
@@ -139,12 +145,12 @@
 <div id="global-alert"></div>
 
     <!-- Основной контент -->
-    <main class="container py-4">
+    <main class="container py-4" style="flex: 1 0 auto;">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Футер -->
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="bg-dark text-white py-4" style="margin-top: auto;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -188,8 +194,9 @@
                 'profile.no_enrollments_title': 'У вас нет записей на курсы',
                 'profile.no_enrollments_desc': 'Запишитесь на интересующий курс',
                 'profile.view_courses': 'Посмотреть курсы',
-                'profile.status_reviewed': 'Рассмотрена',
-                'profile.status_pending': 'Ожидает рассмотрения',
+                'profile.status_accepted': 'Принят',
+                'profile.status_rejected': 'Не принят',
+                'profile.status_pending': 'Ожидает',
                 'profile.feedback_label': 'Фидбек преподавателя:',
                 'profile.no_feedback': 'пока нет',
                 'profile.selected_slots': 'Выбранные занятия:',
@@ -242,8 +249,9 @@
                 'profile.no_enrollments_title': 'You have no enrollments',
                 'profile.no_enrollments_desc': 'Enroll in a course you like',
                 'profile.view_courses': 'View courses',
-                'profile.status_reviewed': 'Reviewed',
-                'profile.status_pending': 'Pending review',
+                'profile.status_accepted': 'Accepted',
+                'profile.status_rejected': 'Rejected',
+                'profile.status_pending': 'Pending',
                 'profile.feedback_label': 'Instructor feedback:',
                 'profile.no_feedback': 'none yet',
                 'profile.selected_slots': 'Selected sessions:',

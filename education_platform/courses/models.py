@@ -74,6 +74,13 @@ class Instructor(models.Model):
         verbose_name='Фото'
     )
     bio = models.TextField(blank=True, verbose_name='Биография')
+    last_name = models.CharField(max_length=100, blank=True, verbose_name='Фамилия')
+    first_name = models.CharField(max_length=100, blank=True, verbose_name='Имя')
+    patronymic = models.CharField(max_length=100, blank=True, verbose_name='Отчество')
+    passport_series = models.CharField(max_length=10, blank=True, verbose_name='Серия паспорта')
+    passport_number = models.CharField(max_length=10, blank=True, verbose_name='Номер паспорта')
+    passport_issued_by = models.CharField(max_length=255, blank=True, verbose_name='Кем выдан паспорт')
+    contract_phone = models.CharField(max_length=20, blank=True, verbose_name='Телефон для договора')
     
     class Meta:
         verbose_name = 'Преподаватель'
@@ -209,6 +216,15 @@ class TimeSlot(models.Model):
 
 # Запись (связь ManyToMany с TimeSlot)
 class Enrollment(models.Model):
+    DECISION_PENDING = 'pending'
+    DECISION_ACCEPTED = 'accepted'
+    DECISION_REJECTED = 'rejected'
+    DECISION_CHOICES = [
+        (DECISION_PENDING, 'Ожидание'),
+        (DECISION_ACCEPTED, 'Принято'),
+        (DECISION_REJECTED, 'Отказано'),
+    ]
+
     # Связь с пользователем (кто сделал запись)
     user = models.ForeignKey(
         User,
@@ -247,6 +263,42 @@ class Enrollment(models.Model):
         verbose_name='Комментарий'
     )
 
+    student_surname = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Фамилия заказчика'
+    )
+
+    student_first_name = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Имя заказчика'
+    )
+
+    student_patronymic = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Отчество заказчика'
+    )
+
+    student_passport_series = models.CharField(
+        max_length=10,
+        blank=True,
+        verbose_name='Серия паспорта заказчика'
+    )
+
+    student_passport_number = models.CharField(
+        max_length=10,
+        blank=True,
+        verbose_name='Номер паспорта заказчика'
+    )
+
+    student_passport_issued_by = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Кем выдан паспорт заказчика'
+    )
+
     feedback = models.TextField(
         blank=True,
         verbose_name='Фидбек преподавателя'
@@ -260,6 +312,13 @@ class Enrollment(models.Model):
     is_approved = models.BooleanField(
         default=False,
         verbose_name='Рассмотрена'
+    )
+
+    decision_status = models.CharField(
+        max_length=20,
+        choices=DECISION_CHOICES,
+        default=DECISION_PENDING,
+        verbose_name='Решение по заявке'
     )
     
     approved_by = models.ForeignKey(
@@ -275,6 +334,13 @@ class Enrollment(models.Model):
         null=True,
         blank=True,
         verbose_name='Дата рассмотрения'
+    )
+
+    contract_file = models.FileField(
+        upload_to='contracts/',
+        blank=True,
+        null=True,
+        verbose_name='Договор (DOCX)'
     )
     
     # Согласия

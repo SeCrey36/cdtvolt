@@ -1,0 +1,130 @@
+[
+  {
+    "step": "baseline",
+    "num_indexes_applied": 0,
+    "plan": [
+      [
+        6,
+        0,
+        0,
+        "SCAN et"
+      ],
+      [
+        8,
+        0,
+        0,
+        "SEARCH e USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        19,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        40,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.002371415961533785,
+    "rows_returned": 1000
+  },
+  {
+    "step": "index_courses_title",
+    "num_indexes_applied": 1,
+    "plan": [
+      [
+        6,
+        0,
+        0,
+        "SCAN et"
+      ],
+      [
+        8,
+        0,
+        0,
+        "SEARCH e USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        19,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        40,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.0015635418239980936,
+    "rows_returned": 1000
+  },
+  {
+    "step": "add_where_indexes",
+    "num_indexes_applied": 3,
+    "plan": [
+      [
+        7,
+        0,
+        0,
+        "SEARCH e USING INDEX idx_enrollments_data_consent (data_consent=?)"
+      ],
+      [
+        18,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        22,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        43,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.0019275411032140255,
+    "rows_returned": 1000
+  },
+  {
+    "step": "add_join_indexes",
+    "num_indexes_applied": 3,
+    "plan": [
+      [
+        7,
+        0,
+        0,
+        "SEARCH e USING INDEX idx_enrollments_data_consent (data_consent=?)"
+      ],
+      [
+        18,
+        0,
+        0,
+        "SEARCH et USING COVERING INDEX sqlite_autoindex_enrollment_timeslots_1 (enrollment_id=?)"
+      ],
+      [
+        22,
+        0,
+        0,
+        "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+      ],
+      [
+        43,
+        0,
+        0,
+        "SEARCH c USING INTEGER PRIMARY KEY (rowid=?)"
+      ]
+    ],
+    "time_seconds": 0.0018740000668913126,
+    "rows_returned": 1000
+  }
+]
